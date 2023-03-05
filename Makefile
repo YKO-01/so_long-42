@@ -10,16 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	so_long
-SRC			=	so_long.c ft_window.c put_image.c map.c even.c \
-				get_next_line.c
+NAME		:=	so_long
+SRCS		=	so_long ft_window put_image map even
+INC		=	inc
 OBJDIR		=	obj
-_OBJ		=	$(SRC:.c=.o)
-OBJ			=	$(patsubst %,$(OBJDIR)/%,$(_OBJ))
-M_LIBFT		=	make -C libft
-M_PRINTF	=	make -C ft_printf
+SRC		=	$(addsuffix .c, $(SRCS))
+OBJ		=	$(addsuffix .o, $(SRCS))
+C_LIBFT		=	make -C libft
+C_PRINTF	=	make -C ft_printfi
+C_GNL		=	make -C gnl
 AR_LIBFT	=	libft/libft.a
 AR_PRINTF	=	ft_printf/libftprintf.a
+AR_GNL		=	gnl/get_next_line
 CFLAGS  	=	-Wall -Wextra -Werror
 MLX			=	-lmlx -framework OpenGL -framework AppKit
 
@@ -35,30 +37,33 @@ B_END	= \x1b[0m
 
 all: $(NAME)
 
-$(OBJDIR)/%.o:%.c
+$(OBJDIR)/%.o: src/%.c
 	@echo "Compiling >>>>>> $^"
 	@mkdir -p $(OBJDIR)
-	@mkdir -p $(OBJDIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -I $(INC) -o $@
 
-$(NAME)	:	$(OBJ)
-	@$(M_LIBFT)
+$(NAME)	:	$(OBJDIR)/$(OBJ)
+	@$(C_LIBFT)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_LIBFT)$(B_END)$(C_END)"
-	@$(M_PRINTF)
+	@$(C_PRINTF)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_PRINTF)$(B_END)$(C_END)"
-	@$(CC) $(CFLAGS) $^ $(AR_LIBFT) $(AR_PRINTF) $(MLX) -o $@
+	@$(C_GNL)
+	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
+	@$(CC) $(CFLAGS) $^ $(AR_LIBFT) $(AR_PRINTF) $(AR_GNL) $(MLX) -I $(INC) -o $@
 	@echo "	 $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
 clean	:
 	@echo "	$(RED)$(BOLD)REMOVED OBJECTS$(B_END)$(C_END)"
-	@$(M_LIBFT) clean
-	@$(M_PRINTF) clean
+	@$(C_LIBFT) clean
+	@$(C_PRINTF) clean
+	@$(C_GNL) clean
 	@rm -rf $(OBJDIR)
 
 fclean	:	clean
 	@rm -rf $(NAME)
-	@$(M_LIBFT) fclean
-	@$(M_PRINTF) fclean
+	@$(C_LIBFT) fclean
+	@$(C_PRINTF) fclean
+	@$(C_GNL) fclean
 	@echo "$(RED)$(BOLD)removed $(AR_LIBFT)\nremoved $(AR_PRINTF)\nremoved $(NAME)$(B_END)$(C_END)"
 
 re:	fclean all
