@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || fd == 1 || fd == 2 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (rest[0] = 0, NULL);
-	tmp = ft_calloc(ft_strlen(rest) + 1, 1);
+	tmp = ft_calloc(ft_strlen_g(rest) + 1, 1);
 	i = -1;
 	while (rest[++i])
 		tmp[i] = rest[i];

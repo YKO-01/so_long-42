@@ -157,8 +157,8 @@ void    so_long(int fd , char *file)
 	if (mlx.mlx_win == NULL)
 		return (free(mlx.mlx_win));
  	player_pos(file, &mlx.x, &mlx.y);
- 	//putimage_on_window(mlx.mlx, mlx.mlx_win, file);
- 	//close(fd);
+ 	putimage_on_window(mlx.mlx, mlx.mlx_win, file);
+ 	close(fd);
  	//mlx_hook(mlx.mlx_win, 2, 0, ft_close, &mlx);
  	mlx_loop(mlx.mlx);
 	mlx_destroy_window(mlx.mlx, mlx.mlx_win);

@@ -10,30 +10,30 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	so_long
-SRCS		=	so_long ft_window put_image map even
-INC		=	inc
-OBJDIR		=	obj
-SRC		=	$(addsuffix .c, $(SRCS))
-OBJ		=	$(addsuffix .o, $(SRCS))
-C_LIBFT		=	make -C libft
-C_PRINTF	=	make -C ft_printfi
-C_GNL		=	make -C gnl
-AR_LIBFT	=	libft/libft.a
-AR_PRINTF	=	ft_printf/libftprintf.a
-AR_GNL		=	gnl/get_next_line
-CFLAGS  	=	-Wall -Wextra -Werror
-MLX			=	-lmlx -framework OpenGL -framework AppKit
+NAME            :=      so_long
+SRCS            :=      so_long ft_window put_image even
+INC             =       inc
+OBJDIR          =       obj
+SRC             :=      $(addprefix src/, $(addsuffix .c, $(SRCS)))
+OBJ             :=      $(addprefix $(OBJDIR)/, $(addsuffix .o, $(SRCS)))
+C_LIBFT         =       make -C libft
+C_PRINTF        =       make -C ft_printf
+C_GNL           =       make -C gnl
+AR_LIBFT        =       libft/libft.a
+AR_PRINTF       =       ft_printf/libftprintf.a
+AR_GNL          =       gnl/get_next_line
+CFLAGS          =       -Wall -Wextra -Werror
+MLX             =	-lmlx -lXext -lX11
 
 #########################
-#		font text		#
+#               color text              #
 #########################
 
-GREEN	= \033[0;32m
-RED 	= \033[0;31m
-C_END	= \033[0m
-BOLD	= \x1b[1m
-B_END	= \x1b[0m
+GREEN   = \033[0;32m
+RED     = \033[0;31m
+C_END   = \033[0m
+BOLD    = \x1b[1m
+B_END   = \x1b[0m
 
 all: $(NAME)
 
@@ -42,7 +42,7 @@ $(OBJDIR)/%.o: src/%.c
 	@mkdir -p $(OBJDIR)
 	@$(CC) $(CFLAGS) -c $< -I $(INC) -o $@
 
-$(NAME)	:	$(OBJDIR)/$(OBJ)
+$(NAME) : $(OBJ)
 	@$(C_LIBFT)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>> $(AR_LIBFT)$(B_END)$(C_END)"
 	@$(C_PRINTF)
@@ -50,16 +50,16 @@ $(NAME)	:	$(OBJDIR)/$(OBJ)
 	@$(C_GNL)
 	@echo "$(GREEN)$(BOLD)Creating >>>>>>>$(AR_GNL)$(B_END)$(C_END)"
 	@$(CC) $(CFLAGS) $^ $(AR_LIBFT) $(AR_PRINTF) $(AR_GNL) $(MLX) -I $(INC) -o $@
-	@echo "	 $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
+	@echo "  $(GREEN) $(BOLD) <<<<<< Done successful! >>>>>>$(B_END) $(C_END)"
 
-clean	:
-	@echo "	$(RED)$(BOLD)REMOVED OBJECTS$(B_END)$(C_END)"
+clean   :
+	@echo " $(RED)$(BOLD)REMOVED OBJECTS$(B_END)$(C_END)"
 	@$(C_LIBFT) clean
 	@$(C_PRINTF) clean
 	@$(C_GNL) clean
 	@rm -rf $(OBJDIR)
 
-fclean	:	clean
+fclean  :	clean
 	@rm -rf $(NAME)
 	@$(C_LIBFT) fclean
 	@$(C_PRINTF) fclean
@@ -69,4 +69,3 @@ fclean	:	clean
 re:	fclean all
 
 .PHONY: all clean fclean re
-

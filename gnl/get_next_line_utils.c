@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen_g(const char *str)
 {
 	size_t	i;
 
@@ -59,8 +59,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	i = 0;
 	j = 0;
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
+	lens1 = ft_strlen_g(s1);
+	lens2 = ft_strlen_g(s2);
 	new = malloc(lens1 + lens2 + 1);
 	if (!new)
 		return (NULL);

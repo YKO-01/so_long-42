@@ -29,7 +29,7 @@ char	*get_next_line(int fd);
 char	*ft_line(char *rest);
 void	ft_save(char *rest);
 char	*ft_strfree(char *buff, char *str);
-size_t	ft_strlen(const char *str);
+size_t	ft_strlen_g(const char *str);
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_calloc(size_t num, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
