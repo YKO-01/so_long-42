@@ -26,7 +26,7 @@ CFLAGS  	=	-Wall -Wextra -Werror
 MLX			=	-lmlx -framework OpenGL -framework AppKit
 
 #########################
-#		font text		#
+#		color text		#
 #########################
 
 GREEN	= \033[0;32m
